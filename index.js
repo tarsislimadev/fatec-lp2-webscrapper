@@ -2,11 +2,19 @@ const { Client } = require('whatsapp-web.js'), qrcode = require('qrcode-terminal
 
 const apis = require('./apis.js')
 
-const client = new Client()
+const client = new Client({
+  puppeteer: {
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  },
+})
 
 client.on('qr', (qr) => qrcode.generate(qr, { small: true }))
 
-client.on('ready', () => console.log('Client is ready!'))
+client.on('ready', async () => {
+  const chats = await client.getChats()
+  console.log(`Chats: ${chats.join(';; ')}.`)
+})
 
 const commands = {
   ping: (msg) => msg.reply('pong'),
