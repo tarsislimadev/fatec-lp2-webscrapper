@@ -2,7 +2,8 @@
   "name": "whatsapp-news-bot",
   "version": "2026.04.09",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "install": "npx puppeteer browsers install chrome"
   },
   "repository": {
     "type": "git",
