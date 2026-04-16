@@ -46,9 +46,9 @@ def validate_date_more_than_month_ago(date_str):
   except ValueError:
     return False
 
-q = get_input('Enter your search query: ', Validator(lambda x: isinstance(x, str) and len(x) > 0, "Search query cannot be empty."))
+q = get_input('Busca: ', Validator(lambda x: isinstance(x, str) and len(x) > 0, "Search query cannot be empty."))
 
-date_from = get_input('Enter the start date (20 days ago) (YYYY-MM-DD): ', Validator(validate_date_more_than_month_ago, "Date must be more than one month ago and in YYYY-MM-DD format."))
+date_from = get_input('Data (< 20 dias) (YYYY-MM-DD): ', Validator(validate_date_more_than_month_ago, "Date must be more than one month ago and in YYYY-MM-DD format."))
 
 url = 'https://newsapi.org/v2/everything?q=' + q + '&from=' + date_from + '&sortBy=publishedAt&apiKey=' + apikey
 
@@ -59,11 +59,11 @@ data = response.json()
 if data['status'] == 'ok':
   articles = data['articles']
   for article in articles:
-    print('Title:', article['title'])
-    print('Description:', article['description'])
+    print('Titulo:', article['title'])
+    print('Descrição:', article['description'])
     print('URL:', article['url'])
-    print('Published At:', article['publishedAt'])
-    print('Source:', article['source']['name'])
+    print('Publicado em:', article['publishedAt'])
+    print('Fonte:', article['source']['name'])
     print('---')
 else:
-  print('Error fetching news:', data['message'])
+  print('Erro:', data['message'])
